@@ -1,0 +1,32 @@
+{% extends 'tease.twig' %}
+
+{% block content %}
+	{% if post.thumbnail.src %}
+		<img src="{{ post.thumbnail.src }}" />
+		<div class="img"></div>
+	{% endif %}
+	{% set time = reading_time(post.ID) %}
+	<div class="pills">
+		{% set categories =
+			post.terms({
+				taxonomy: 'category',
+				orderby: 'name',
+				order: 'ASC'
+			})
+		%}
+
+		{% for category in categories %}
+			<span>{{ category }}</span>
+		{% endfor %}
+		<span>{{ time }}</span>
+	</div>
+	<h2 class="h2 heading">
+		{{ post.title }}
+	</h2>
+	<p>
+		{{ post.preview.length(25).read_more(false) }}
+	</p>
+	<a href="{{ post.link }}" class="eyebrow">
+		Read Article{% do render_file('/assets/icons/button_arrow.svg') %}
+	</a>
+{% endblock %}

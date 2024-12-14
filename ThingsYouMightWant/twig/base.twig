@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html class="no-js no-svg" {{ site.language_attributes }}>
+	<head>
+		{% block html_head_container %}
+			{% include 'html-header.twig' %}
+			{% block head %}
+
+			{% endblock %}
+		{% endblock %}
+	</head>
+{# 
+	{% set page_color = post.meta('page_color') %} #}
+	<body class="{{ body_class }} {% block body_classes %} {% endblock %}  {{ post.slug }}" data-template="base.twig">
+		{% block nav %}
+			{% include 'components/navigation.twig' %}
+		{% endblock %}
+		<main id="content" role="main" class="main-content-wrapper">
+			{% block content %}
+
+			{% endblock %}
+		</main>
+
+		{% block footer %}
+			<footer id="footer">
+				{% include 'footer.twig' %}
+			</footer>
+			{{ function('wp_footer') }}
+		{% endblock %}
+	</body>
+</html>

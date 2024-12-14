@@ -1,0 +1,31 @@
+/**
+Define colors by semantic name here.
+They can be used anywhere by importing via @use (see globals/theme.scss).
+Also, 
+*/
+
+// text colors
+$white: #ffffff;
+$black: #000000;
+$tropicalIndigo: #978eff;
+$jetText: #535862;
+$icterine: #fdff6d;
+$raisenBlack: #181d27;
+// background colors
+$yellow: #e3ff43;
+$dark: #090a0e;
+$pictonBlue: #28a8e0;
+$battleshipGrey: #8c8c8c;
+$floralWhite: #fbfaf0;
+$alabaster: #dfded2;
+$jet: #353639;
+
+$skyBlue: #93d3ef;
+
+// button stuff
+$button-bg-yellow: $yellow;
+$button-bg-black: $black;
+$button-bg-white: $white;
+$button-bg-blue: $skyBlue;
+// card colors
+$contact-background: $white;

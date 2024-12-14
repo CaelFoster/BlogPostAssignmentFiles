@@ -1,0 +1,68 @@
+@use '../../mixins/breakpoints.scss';
+@use '../../mixins/colors.scss';
+.post {
+	article {
+		.pills {
+			margin-block: var(--spacing-4xs);
+			span {
+				background-color: var(--button-bg-lightblue);
+				margin-block: var(--spacing-5xs);
+			}
+		}
+		.heading {
+			margin-block: var(--spacing-4xs) var(--spacing-xxs);
+			font-size: var(--font-size-xs);
+		}
+		p {
+			display: none;
+		}
+		img {
+			display: none;
+		}
+		.img {
+			width: 100%;
+			height: 100%;
+			aspect-ratio: 1/1;
+			background: url('/wp-content/themes/propaganda-theme/assets/images/bg-noise.png'),
+				var(--bg-img);
+			background-size: cover;
+			background-position: center;
+			border-radius: var(--radius-lg);
+			background-repeat: no-repeat;
+			background-blend-mode: hard-light, normal;
+		}
+		a {
+			text-decoration: none;
+			display: flex;
+			align-items: center;
+			svg {
+				transition: all var(--transition-duration-fast)
+					var(--transition-timing-function);
+				fill: inherit;
+				path {
+					fill: var(--text-color-secondary);
+				}
+			}
+			&:hover {
+				svg {
+					transform: translateX(0.5em);
+				}
+			}
+		}
+	}
+}
+body.dark {
+	.post {
+		color: var(--text-color-primary);
+		.pills span {
+			&:last-child {
+				color: var(--text-color-primary);
+			}
+		}
+		article {
+			a svg path {
+				fill: var(--text-color-primary);
+			}
+		}
+	}
+}

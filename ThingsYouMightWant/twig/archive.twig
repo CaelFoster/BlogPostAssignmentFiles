@@ -1,0 +1,35 @@
+{% extends 'base.twig' %}
+{% block body_classes %}
+	{% set page_color = post.meta('page_color') %}
+	{{ page_color }}
+{% endblock %}
+{% block content %}
+	{% block page_content %}
+		{% set modules = post.meta('sections') %}
+		{% for module in modules %}
+			{% if post.blog_position == loop.index %}
+				{% include [
+					'partial/blog-posts.twig',
+					'modules/missing-module.twig'
+				] with {
+					module_name: module.acf_fc_layout
+				} %}
+			{% endif %}
+
+			{% include [
+				'modules/' ~ module.acf_fc_layout ~ '.twig',
+				'modules/missing-module.twig'
+			] with {
+				module_name: module.acf_fc_layout
+			} %}
+		{% endfor %}
+		{% if (modules|length) > post.blog_position %}
+			{% include [
+				'partial/blog-posts.twig',
+				'modules/missing-module.twig'
+			] with {
+				module_name: module.acf_fc_layout
+			} %}
+		{% endif %}
+	{% endblock %}
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.twig' %}
+{% do enqueue_style('single', 'assets/css/pages/single.css') %}
+{% do enqueue_style('tease-styles', 'assets/css/components/tease-styles.css') %}
+{% block content %}
+	{# <article class="post-type-{{ post.post_type }}" id="post-{{ post.ID }}"> #}
+	{% set bgImg = post.thumbnail %}
+	<section class="post-hero default-typography"
+		style="--bg-img:url({{ bgImg.src }})">
+		<div class="bg-img"></div>
+		<div class="text">
+			<h1 class="heading">
+				{{ post.title }}
+			</h1>
+			<p>
+				{{ post.preview.length(false).read_more(false) }}
+			</p>
+		</div>
+	</section>
+	<section class="post-content default-typography-minus-headings">
+		{# data-aos="fade-in"> #}
+		<div class="max-width-wrapper">
+			{{ post.content }}
+		</div>
+		{% set posts =
+			fn(
+				['Timber', 'get_posts'],
+				{
+					post_type: 'post',
+					posts_per_page: 4
+				}
+			)
+		%}
+		<div class="featured-posts default-typography">
+			<div class="sticky">
+				<div class="read-more">
+					<h3 class="heading h3">
+						You Might Also Like.
+					</h3>
+					<a class="eyebrow" href="/archive/">
+						View All{% do render_file('/assets/icons/button_arrow.svg') %}
+					</a>
+				</div>
+				<div class="posts">
+					{% for post in posts %}
+						<div class="post" style="--bg-img:url({{ post.thumbnail.src }})">
+							{% include ['tease-' ~ post.post_type ~ '.twig', 'tease.twig'] %}
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</section>
+	{# </article> #}
+
+	<!-- /content-wrapper -->
+{% endblock %}

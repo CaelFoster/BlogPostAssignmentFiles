@@ -1,0 +1,91 @@
+{% do enqueue_style(
+	'tease-styles',
+	'assets/css/components/tease-styles.css',
+	['keen-slider']
+) %}
+{% do enqueue_style(
+	'blog-posts',
+	'assets/css/modules/blog-posts.css',
+	['keen-slider']
+) %}
+{% do enqueue_script(
+	'blog-post-slider',
+	'assets/js/modules/blog-post-slider.js',
+	['keen-slider'],
+	true
+) %}
+<section class="blog-posts default-typography">
+	<div class="row-heading">
+		<h2 class="h2 heading">
+			{{ post.heading_regular_text }}
+		</h2>
+		<p>
+			{{ post.copy }}
+		</p>
+	</div>
+	{# if there are 1-2 featured posts #}
+	{% if (featured_posts|length) < 3 %}
+		<div class="big-post">
+			{% for featured in featured_posts %}
+				<div class="post-feature {% if featured_posts|length == 1 %} single-feature {% endif %}"
+					style="--bg-img:url({{ featured.thumbnail.src }})">
+					{% include [
+						'tease-' ~ featured.post_type ~ '.twig',
+						'tease.twig'
+					] with {
+						post: featured
+					} %}
+				</div>
+			{% endfor %}
+		</div>
+		{# if there are 5 featured posts #}
+	{% endif %}
+	{% if (featured_posts|length) == 5 %}
+		{# make the first one big and the rest small #}
+		<div class="featured-posts keen-slider">
+			{# <div class="before"></div> #}
+			{% for featured in featured_posts %}
+				{% if loop.index == 1 %}
+					<div class="post-feature keen-slider__slide"
+						style="--bg-img:url({{ featured.thumbnail.src }})">
+						{% include [
+							'tease-' ~ featured.post_type ~ '.twig',
+							'tease.twig'
+						] with {
+							post: featured
+						} %}
+					</div>
+				{% endif %}
+			{% endfor %}
+			{# keen-slider__slide #}
+			{# maybe position absolute everything to get them out of their parent divs #}
+
+			{% for mini in featured_posts %}
+				{% if loop.index != 1 %}
+					<div class="post keen-slider__slide"
+						style="--bg-img:url({{ mini.thumbnail.src }})">
+						{% include [
+							'tease-' ~ mini.post_type ~ '.twig',
+							'tease.twig'
+						] with {
+							post: mini
+						} %}
+					</div>
+				{% endif %}
+			{% endfor %}
+
+			{# <div class="after"></div> #}
+		</div>
+	{% endif %}
+
+	<h5 class="h5 heading">
+		More blog posts
+	</h5>
+	<div class="posts">
+		{% for post in posts %}
+			<div class="post" style="--bg-img:url({{ post.thumbnail.src }})">
+				{% include ['tease-' ~ post.post_type ~ '.twig', 'tease.twig'] %}
+			</div>
+		{% endfor %}
+	</div>
+</section>
